@@ -8,7 +8,6 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const product = await modelsProducts.getById(id);
-  if (!product) return null;
   return product;
 };
 
