@@ -9,6 +9,11 @@ const products = [
   { "id": 3, "name": "Escudo do Capitão América" }
 ];
 
+const productAdded = {
+  id: 4,
+  name: 'Capa de invisibilidade',
+};
+
 describe('Testes da camada services', () => {
   describe('A função getAll', () => {
     beforeEach(() => {
@@ -66,4 +71,23 @@ describe('Testes da camada services', () => {
       });
     })
   });
+
+  describe('A função insertProduct', () => {
+    beforeEach(() => {
+      sinon.stub(modelsProducts, 'insertProduct').resolves(productAdded);
+    });
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it('Testa se é retornado um objeto com as chaves "id" e "name"', async () => {
+      const response = await servicesProducts.insertProduct('Capa de invisibilidade');
+      expect(response).to.be.a('object').with.keys('id', 'name');
+    });
+
+    it('Testa se o objeto retornado possui o id e o name corretos', async () => {
+      const response = await servicesProducts.insertProduct('Capa de invisibilidade');
+      expect(response).to.be.deep.equal({ id: 4, name: 'Capa de invisibilidade' });
+    });
+  })
 });

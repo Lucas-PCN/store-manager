@@ -47,4 +47,23 @@ describe('Testes da camada model', () => {
       expect(response).to.be.deep.equal([products[0]]);
     });
   });
+
+  describe('A função insertProduct', () => {
+    beforeEach(() => {
+      sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+    });
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it('Testa se é retornado um objeto', async () => {
+      const response = await modelsProducts.insertProduct('Capa de invisibilidade');
+      expect(response).to.be.a('object').with.keys('id', 'name');
+    });
+
+    it('Testa se o objeto retornado possui o id correto', async () => {
+      const response = await modelsProducts.insertProduct('Capa de invisibilidade');
+      expect(response).to.be.deep.equal({ id: 4, name: 'Capa de invisibilidade' });
+    });
+  });
 });
