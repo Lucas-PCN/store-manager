@@ -51,9 +51,23 @@ const validateIfProductExists = async (req, res, next) => {
   next();
 };
 
+const validateIfSalesIdExists = async (req, res, next) => {
+  const { id } = req.params;
+  const isSaleIdValid = await servicesSales.validSalesId(id);
+
+  if (!isSaleIdValid) {
+    return res
+      .status(404)
+      .json({ message: 'Sale not found' });
+  }
+
+  next();
+};
+
 module.exports = {
   validateProductsIds,
   validateQuantities,
   validateQuantityLength,
   validateIfProductExists,
+  validateIfSalesIdExists,
 };
