@@ -9,6 +9,12 @@ const products = [
   { "id": 3, "name": "Escudo do Capitão América" }
 ];
 
+const ids = [
+  { "id": 1 },
+  { "id": 2 },
+  { "id": 3 },
+];
+
 describe('Testes da camada model', () => {
   describe('A função getAll', () => {
     beforeEach(() => {
@@ -45,6 +51,25 @@ describe('Testes da camada model', () => {
     it('Testa se a função retorna o produto correto', async () => {
       const response = await modelsProducts.getById(1);
       expect(response).to.be.deep.equal([products[0]]);
+    });
+  });
+
+  describe('A função getIdProducts', () => {
+    beforeEach(() => {
+      sinon.stub(connection, 'execute').resolves([ids])
+    });
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it('Testa se o retorno da getIdProducts é um array', async () => {
+      const response = await modelsProducts.getIdProducts();
+      expect(response).to.be.a('array');
+    });
+
+    it('Testa se o array retornado é igual ao esperado', async () => {
+      const response = await modelsProducts.getIdProducts();
+      expect(response).to.be.equal(ids);
     });
   });
 
