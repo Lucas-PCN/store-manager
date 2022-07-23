@@ -31,4 +31,21 @@ const insertProduct = async (req, res) => {
   return res.status(201).json(product);  
 };
 
-module.exports = { getAll, getById, insertProduct };
+const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  if (!name) {
+    return res.status(400).json({ message: '"name" is required' });
+  }
+
+  if (name.length < 5) {
+    return res.status(422).json({ message: '"name" length must be at least 5 characters long' });
+  }
+  
+  const result = await servicesProducts.updateProduct(name, id);
+
+  return res.status(200).json(result);
+};
+
+module.exports = { getAll, getById, insertProduct, updateProduct };

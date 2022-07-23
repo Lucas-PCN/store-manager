@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const controllersProducts = require('./controllers/controllersProducts');
 const controllersSales = require('./controllers/controllersSales');
 const middlewaresSales = require('./middlewares/middlewaresSales');
+const middlewaresProducts = require('./middlewares/middlewaresProducts');
 
 const app = express();
 app.use(bodyParser.json());
@@ -30,6 +31,10 @@ app.get('/sales', controllersSales.getAll);
 app.get('/sales/:id',
   middlewaresSales.validateIfSalesIdExists,
   controllersSales.getById);
+
+app.put('/products/:id',
+  middlewaresProducts.validateId,
+  controllersProducts.updateProduct);
 
 // não remova essa exportação, é para o avaliador funcionar
 // você pode registrar suas rotas normalmente, como o exemplo acima
