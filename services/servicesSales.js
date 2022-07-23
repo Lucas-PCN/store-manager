@@ -44,10 +44,15 @@ const validSalesId = async (saleId) => {
   return result.map(({ id }) => id).includes(Number(saleId));
 };
 
+const deleteSale = async (id) => {
+  await modelsSales.deleteSale(id);
+};
+
 module.exports = {
   insertSale,
   productsIds,
   getAll,
   getById,
   validSalesId,
+  deleteSale,
 };

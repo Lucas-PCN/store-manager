@@ -21,8 +21,17 @@ const getById = async (req, res) => {
   return res.status(200).json(result);
 };
 
+const deleteSale = async (req, res) => {
+  const { id } = req.params;
+
+  await servicesSales.deleteSale(id);
+
+  res.status(204).end();
+};
+
 module.exports = {
   insertSale,
   getAll,
   getById,
+  deleteSale,
 };
